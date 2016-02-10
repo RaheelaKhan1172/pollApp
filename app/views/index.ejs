@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org">
+  <body>
+    <h1> <%= title %></h1>
+    <script defer src="/lib/angular/angular.js"></script> 
+    <script defer src="/lib/angular/angular-route/angular-route.js"></script>
+    <section ng-include="'example/views/example.client.view.html'"></section>
+    <script defer src="/example/example.client.module.js"></script>
+    <script defer src="/example/controllers/example.client.controller.js"></script>
+    <script defer src="/application.js"></script>
+  </body>
+</html>
