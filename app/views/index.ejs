@@ -1,9 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:ng="http://angularjs.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+  </head>
   <body>
-    <h1> <%= title %></h1>
-    <script defer src="/lib/angular/angular.js"></script> 
-    <script defer src="/lib/angular/angular-route/angular-route.js"></script>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="navbar-header">
+        <button class="navbar-toggle" type="button" ng-init="navCollapsed" ng-click="navCollapsed = !navCollapsed">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      <a class="navbar-brand" href="/">Polling App</a>
+      </div> <!-- end nav header -->
+      <div class="collapse navbar-collapse" ng-class="navCollapsed && 'in'">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/signin">Sign In</a></li>
+          <!-- add check if user is signed in, if so, display another link to 'profile' -->
+        </ul> 
+      </div> <!-- navbar collapse div -->
+    </nav> <!-- end nav --> 
+    <script  src="/lib/angular/angular.js"></script> 
+    <script src="/lib/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
     <section ng-include="'example/views/example.client.view.html'"></section>
     <script defer src="/example/example.client.module.js"></script>
     <script defer src="/example/controllers/example.client.controller.js"></script>
