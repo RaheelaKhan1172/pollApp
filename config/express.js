@@ -3,7 +3,8 @@ var express = require('express'),
   methodOverride = require('method-override'),
   session = require('express-session'),
   flash = require('connect-flash'),
-  passport = require('passport');
+  passport = require('passport'),
+  FacebookStrategy = require('passport-facebook').Strategy;
 
 module.exports = function() {
   var app = express();
