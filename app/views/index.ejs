@@ -23,12 +23,27 @@
           <!-- add check if user is signed in, if so, display another link to 'profile' -->
         </ul> 
       </div> <!-- navbar collapse div -->
-    </nav> <!-- end nav --> 
+    </nav> <!-- end nav -->
+    <% if ( userFullName ) { %>
+      <h2> Hello <%=userFullName%></h2>
+        <a href="/signout"> Sign out </a>
+    <% } else { %>
+      <a href="/signup"> Signup</a>
+      <a href="/signin"> Signin</a>
+    <% } %>
+    <section ng-view></section>  <!-- dynamic view handling -->
+
+    <footer class="navbar-default navbar-fixed-bottom">
+      <div class="container-fluid">
+        <span> Made by: Raheela Khan </span>
+      </div>
+    </footer> 
     <script  src="/lib/angular/angular.js"></script> 
     <script src="/lib/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
-    <section ng-include="'example/views/example.client.view.html'"></section>
-    <script defer src="/example/example.client.module.js"></script>
-    <script defer src="/example/controllers/example.client.controller.js"></script>
-    <script defer src="/application.js"></script>
+    <script src="/lib/angular-route/angular-route.js"></script>
+    <script  src="/example/example.client.module.js"></script>
+    <script  src="/example/controllers/example.client.controller.js"></script>
+      <script src="/example/config/app.client.routes.js"></script>
+    <script  src="/application.js"></script>
   </body>
 </html>
