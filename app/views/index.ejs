@@ -24,8 +24,7 @@
         </ul> 
       </div> <!-- navbar collapse div -->
     </nav> <!-- end nav -->
-    <% if ( userFullName ) { %>
-      <h2> Hello <%=userFullName%></h2>
+    <% if ( user ) { %>
         <a href="/signout"> Sign out </a>
     <% } else { %>
       <a href="/signup"> Signup</a>
@@ -37,13 +36,18 @@
       <div class="container-fluid">
         <span> Made by: Raheela Khan </span>
       </div>
-    </footer> 
+    </footer>
+ 
+    <script type="text/javascript"> window.user = <%- user || 'null' %>; </script>
+
     <script  src="/lib/angular/angular.js"></script> 
     <script src="/lib/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
     <script src="/lib/angular-route/angular-route.js"></script>
     <script  src="/example/example.client.module.js"></script>
     <script  src="/example/controllers/example.client.controller.js"></script>
-      <script src="/example/config/app.client.routes.js"></script>
+    <script src="/example/config/app.client.routes.js"></script>
+    <script src="/users/users.client.module.js"></script>
+    <script src="/users/services/authentication.client.service.js"></script>
     <script  src="/application.js"></script>
   </body>
 </html>

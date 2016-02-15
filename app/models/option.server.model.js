@@ -6,8 +6,13 @@ var optionSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Poll'
   },
-  count: Number,
-  choices: [{type:String}]
+  count: [ Number ],
+  required: true,
+  choices: [
+  {
+    type:String,
+  }
+  ]
 });
 
  mongoose.model('Option',optionSchema);

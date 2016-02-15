@@ -1,6 +1,6 @@
-angular.module('app').controller('ExampleController',['$scope', function($scope) {
-  $scope.data = {} ;
-  $scope.data.breakfast = false;
-  $scope.data.lunch = false;
+angular.module('app').controller('ExampleController',['$scope','Authentication',
+   function($scope,Authentication) {
+    $scope.name = Authentication.user ? ((Authentication.user.fullName === undefined) ? Authentication.user.username : 
+                                          Authentication.user.username) : ''; 
   }
 ]);

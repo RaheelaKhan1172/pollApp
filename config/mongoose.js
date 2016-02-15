@@ -5,6 +5,6 @@ module.exports = function() {
   var db = mongoose.connect(url);
   
   require('../app/models/user.server.model');    
-  
+  require('../app/models/poll.server.model');  
   return db;
 };
