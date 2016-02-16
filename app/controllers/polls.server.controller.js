@@ -1,12 +1,29 @@
-var Poll = require('mongoose').model('Poll');
+var mongoose = require('mongoose'),
+  Poll = mongoose.model('Poll');
+
+
+var getErrorMessage = function(err) {
+  if (err.errors) {
+    for (var errName in err.errors) {
+      if (err.errors[errName].message) {
+        return err.errors[errName].message;
+      }
+    }
+  } else {
+    return 'Unknown server error';
+  }
+};
 
 exports.create = function(req,res,next) {
  
   var poll = new Poll(req.body);
+  poll.creator = req.user;
+
   poll.save(function(err) {
     if (err) {
-      console.log(err);
-      return next(err);
+      return res.status(400).send({
+        message: getErrorMessage(err)
+      });
     } else {
       res.json(poll);
     }
@@ -16,7 +33,9 @@ exports.create = function(req,res,next) {
 exports.list = function(req,res,next) {
   Poll.find({}, function(err,polls) {
     if (err) {
-      return next(err);
+      return res.status(400).send({
+        message: getErrorMessage(err)
+      });
     } else {
       console.log(polls);
       res.json(polls);
@@ -29,23 +48,50 @@ exports.read = function(req,res) {
 };
 
 exports.update = function(req,res,next) {
-  Poll.findByIdAndUpdate(req.poll.id, req.body, function(err,poll) {
+  var poll = req.poll;
+  poll.title = req.body.title;
+  poll.option = req.body[options].option;
+
+  poll.save(function(err) {
+    if (err) {
+      return res.status(400).send({
+        message:getErrorMessage(err)
+      });
+    } else {
+      res.json(poll);
+    }
+  });
+};
+/*  Poll.findByIdAndUpdate(req.poll.id, req.body, function(err,poll) {
     if (err) {
       return next(err);
     } else {
       res.json(poll);
     }
   });
-};
+};*/
 
 exports.delete = function(req,res,next) {
-  req.poll.remove(function(err) {    
+  var poll = req.poll;
+
+  poll.remove(function(err) {    
     if (err) {
-      return next(err);
+      return res.status(400).send({
+        message: getErrorMessage(err)
+      });
     } else {
       res.json(req.poll);
     };
   });
+};
+
+exports.hasAuthorization = function(req,res,next) {
+  if (req.poll.creator.id !== req.user.id) {
+    return res.status(403).send({
+      message: 'User is not authorized'
+    });
+  }
+  next();
 };
 
 exports.pollByID = function(req,res,next,id) {
@@ -60,3 +106,4 @@ exports.pollByID = function(req,res,next,id) {
     }
   });
 };
+
