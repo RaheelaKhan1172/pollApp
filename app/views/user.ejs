@@ -4,16 +4,23 @@
     <% include ./partials/head %>
   </head>
   <body>
-  <% include ./partials/navigation %>
-    <section ng-view></section>  <!-- dynamic view handling -->
+    <% include ./partials/navigation %>
+    <div class="row"> 
+      <div class="col-md-6">
+        
+      </div> <!-- end first column -->
 
-    <footer class="navbar-default navbar-fixed-bottom">
-      <% include ./partials/footer %>
-    </footer>
+      <div class="col-md-6"> 
  
-    <script type="text/javascript"> window.user = <%- user || 'null' %>; </script>
+      </div><!-- end second column -->
+    </div> <!-- end top row -->
+  <footer class="navbar default navbar-fixed-bottom">
+    <% include ./partials/footer %>
+  </footer>
+  
+  <script type="text/javascript"> window.user = <%- user || 'null' %>; </script>
 
-    <script  src="/lib/angular/angular.js"></script> 
+    <script  src="/lib/angular/angular.js"></script>
     <script src="/lib/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
     <script src="/lib/angular-route/angular-route.js"></script>
     <script src="/lib/angular-resource/angular-resource.js"></script>
@@ -23,5 +30,6 @@
     <script src="/users/users.client.module.js"></script>
     <script src="/users/services/authentication.client.service.js"></script>
     <script  src="/application.js"></script>
+  
   </body>
-</html>
+</html>  

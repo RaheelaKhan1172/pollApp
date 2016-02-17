@@ -22,6 +22,14 @@ var getErrorMessage = function(err) {
   return message;
 };
 
+exports.controlPanel = function(req,res,next) {
+  res.render('user', {
+    name: (req.user)? ((req.user.firstName === undefined) ? req.user.username: req.user.firstName)  : '',
+    id: (req.user) ? req.user.id : '',
+    user: JSON.stringify(req.user)
+  });
+};
+
 exports.renderSignin = function(req,res,next) {
   if (!req.user) {
     res.render('signin', {
@@ -59,7 +67,7 @@ exports.signup = function(req,res,next) {
       }
       req.login(user, function(err) {
         if (err) return next(err);
-        return res.redirect('/');
+        return res.redirect('/user');
       });
     });
   } else {
