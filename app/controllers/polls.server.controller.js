@@ -86,41 +86,68 @@ exports.read = function(req,res) {
 };
 
 exports.update = function(req,res,next) {
-   
-    var poll = req.poll;
-    console.log('the options =>', poll.options);
-    console.log('the requset body ',req.body, 'length =>', req.body.options.length);
+    Poll.findById(req.body._id).populate('options', 'choice').exec(function(err,poll) {
+    var choices = req.body.options.map(v=> v.text);
     var i = 0;
-    var k = 0;
-    req.body.options.forEach(function(item) {
-        var option = new Option({choice:item.text,poll:poll._id,count:0});
-        console.log('options inside loop => ',option);
+    savePoll = function(id) {
+        i+=1; 
+        if (i === 1) {
+            poll.options.push(id);
+        } else if (i === 2) {
+            poll.options.push(id);
+        } else {
+            poll.options.push(id);
+            poll.save(function(err) {
+                if (err) {
+                    return res.status(400).send({
+                        message:getErrorMessage(err)
+                    });
+                } else {
+                    res.json(poll);
+                }
+            });
+        }
+    };
+        
+    addOption = function(option) {
+        var option = new Option({choice:option,poll:poll._id,count:0});
+        
         option.save(function(err) {
             if (err) {
                 return res.status(400).send({
                     message:getErrorMessage(err)
                 });
             } else {
-                k+=1;
-                console.log(' k ', k);
-                if (k) {
-                    poll.options.push(option._id)
-                    poll.save(function(err) {
-                        if (err) {
-                            return res.status(400).send({
-                                message:getErrorMessage(err)
-                            });
-                        } else {
-                            i += 1;
-                            if (i === req.body.options.length) {
-                                res.json(poll);
-                            }
-                        }
-                    });
+                savePoll(option._id);
+            }
+        });
+    };
+        
+    choices.forEach(function(item) {
+        addOption(item);
+    });
+        
+});
+};
+     /*   var savePoll = function(id) {
+            (console.log('hello againnnn',id));
+            poll.options.push(id);
+            poll.save(function(err) {
+                if(err) {
+                    return res.status(400).send({
+                        message: getErrorMessage(err)
+                    }); 
+                } else {
+                    i+=1;
+                    if (i === choices.length) {
+                    console.log('final poll! => ',poll);
+                    res.json(poll);
+                    }
                 }
-        };
-    });
-    });
+            });
+        };*/
+        
+     
   /*  poll.options.forEach(function(item) {
         console.log('the item text',item.text);
        var option = new Option({choice:item.text, poll:poll._id, count:0});
@@ -148,7 +175,6 @@ exports.update = function(req,res,next) {
             }
         });
       }); */
-    };
 /*    option.save(function(err) {
      if (err) {
       return res.status(400).send({
@@ -203,6 +229,8 @@ exports.hasAuthorization = function(req,res,next) {
 
 exports.pollByID = function(req,res,next,id) {
     var i = 0;
+    
+    console.log('inside fucking poll', req.body,id);
 Poll.findOne({
   _id:id
 }).populate('options','choice count').exec(function(err,poll) {
