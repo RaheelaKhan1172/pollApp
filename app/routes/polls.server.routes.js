@@ -2,11 +2,12 @@
 var users = require('../../app/controllers/users.server.controller'),
   polls = require('../../app/controllers/polls.server.controller'),
   index = require('../../app/controllers/index.server.controller');
+
 module.exports = function(app) {
   app.route('/polls')
     .post(users.requiresLogin, polls.create)
-    .get(index.render);
-
+    .get(polls.list);
+    
   app.route('/polls/:id') 
     .get(polls.read)
     .put(users.requiresLogin, polls.update)

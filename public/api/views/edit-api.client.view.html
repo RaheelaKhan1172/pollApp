@@ -1,0 +1,17 @@
+<section data-ng-controller="ApiController" data-ng-init="findOne()">
+    <h1> Edit Poll </h1>
+    <form data-ng-submit="update()" novalidate>
+        <div class="form-group">
+        <label> Add more options: </label>
+            <div ng-repeat="option in poll.options">
+              <input type="text" data-ng-model="option.text" class="form-control" placeholder="Add another option">
+            </div>
+        </div>
+        <button type="button" ng-click="addMoreOptions()">
+        Add more options!</button>
+        <input type="submit">
+    
+    </form>
+
+
+</section>

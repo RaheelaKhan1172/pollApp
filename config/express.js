@@ -9,6 +9,8 @@ var express = require('express'),
 module.exports = function() {
   var app = express();
   app.use(bodyParser.urlencoded({extended:true}));
+    
+    app.use(bodyParser.json());
   app.use(session({
     saveUninitialized:true,
     resave: true,

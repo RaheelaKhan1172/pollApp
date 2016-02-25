@@ -7,13 +7,76 @@
     <% include ./partials/navigation %>
     <div class="row"> 
       <div class="col-md-6">
-        
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-3">  
+                <i class="fa fa-pie-chart"></i>
+              </div>
+              <div class="col-xs-9 text-right">
+                <div class="huge"> 4 </div> <!-- add total polls here later -->
+                <div> Total Polls </div>
+            </div>
+          </div>
+        </div>
+      </div>
       </div> <!-- end first column -->
 
       <div class="col-md-6"> 
- 
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-3">
+                <i class="fa fa-percent"></i> 
+              </div>
+              <div class="col-xs-9 text-right">
+                <div class="huge"> 34 </div> <!-- add aggregate votes for all polls here -->
+                <div> Total Votes </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div><!-- end second column -->
     </div> <!-- end top row -->
+
+    <div class="row"> <!-- control for edit/create -->
+      <div class="col-lg-12 text-right">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/#!/polls/create"> Create Poll </a> </li>
+        </ul>
+      </div>
+    </div> <!-- end div for edit/create -->
+
+   <div class="row">
+    <div class="col-lg-12 panel-heading">
+      My Polls
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3 col-md-6">
+     <div class="panel panel-primary">
+      <div class="panel-heading">
+         
+      <!-- display pie charts here -->
+      </div> 
+     </div>
+    <div class="panel-footer">
+      <li>  <a href="#!/polls/edit"> Edit </a></li>
+      <li> <a href="#"> Delete</a></li>
+    </div>
+  </div>
+    <div class="col-lg-3 col-md-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <!-- pie chart goes here --> 
+        </div>
+      </div> 
+      <div class="panel-footer">
+        <li> <a href="#!/">Edit</a></li>
+        <li> <a href="#"> Delete </a> </li>
+      </div>
+    </div>
+  </div>  <!-- end row -->
   <footer class="navbar default navbar-fixed-bottom">
     <% include ./partials/footer %>
   </footer>
@@ -24,11 +87,11 @@
     <script src="/lib/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
     <script src="/lib/angular-route/angular-route.js"></script>
     <script src="/lib/angular-resource/angular-resource.js"></script>
-    <script  src="/example/example.client.module.js"></script>
-    <script  src="/example/controllers/example.client.controller.js"></script>
-    <script src="/example/config/app.client.routes.js"></script>
+    <script src="/api/api.client.module.js"></script>
     <script src="/users/users.client.module.js"></script>
     <script src="/users/services/authentication.client.service.js"></script>
+            <script src="/api/controllers/api.client.controller.js"></script>
+
     <script  src="/application.js"></script>
   
   </body>

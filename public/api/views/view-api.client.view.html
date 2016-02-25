@@ -1,0 +1,11 @@
+<section data-ng-controller="ApiController" data-ng-init="findOne()">
+  <h1 data-ng-bind="poll.title"></h1>
+  <div data-ng-show="authentication.user._id == poll.creator">
+     
+    <a href="/#!/polls/{{poll._id}}/edit">Edit</a>
+    <a href="#" data-ng-click="delete();">Delete</a>
+  </div>
+  <em> Poll </em>
+    <h1 data-ng-bind="poll.options[0].choice"></h1>
+
+</section>

@@ -4,12 +4,11 @@ var mongoose = require('mongoose'),
 var PollSchema = new Schema({ 
   title: {
     type: String,
-    trim: true,
-    required: 'Title cannot be blank'
+    trim: true
   },
   options: [{
-    option: String,
-    count: Number
+    type:Schema.ObjectId,
+    ref:'Option'
   }],
   creator: {
     type: Schema.ObjectId,
