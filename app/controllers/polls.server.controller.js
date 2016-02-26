@@ -67,7 +67,7 @@ exports.create = function(req,res,next) {
 
 exports.list = function(req,res,next) {
   Poll.find({})
-  .populate('options','choice count')
+  .populate('options','choice count _id')
   .exec(function(err,polls) {
       console.log('so many polls = > ', polls);
     if (err) {
@@ -76,7 +76,6 @@ exports.list = function(req,res,next) {
       });
     } else {
             //polls is an array
-        console.log('da polls befor ebeign sent => ', polls);
         res.json(polls);
     }   
   });
@@ -88,7 +87,7 @@ exports.read = function(req,res) {
 };
 
 exports.update = function(req,res,next) {
-    Poll.findById(req.body._id).populate('options', 'choice').exec(function(err,poll) {
+    Poll.findById(req.body._id).populate('options', 'choice count').exec(function(err,poll) {
     var choices = req.body.options.map(v=> v.text);
     var i = 0;
     savePoll = function(id) {
@@ -235,7 +234,7 @@ exports.pollByID = function(req,res,next,id) {
     
 Poll.findOne({
   _id:id
-}).populate('options','choice count').exec(function(err,poll) {
+}).populate('options','choice count _id').exec(function(err,poll) {
   if (err) return next(err);
   if (!poll) {
     return next(new Error('Failed to load poll :  ' + id));

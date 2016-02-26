@@ -6,6 +6,15 @@
     <a href="#" data-ng-click="delete();">Delete</a>
   </div>
   <em> Poll </em>
-    <h1 data-ng-bind="poll.options[0].choice"></h1>
-
+    <h1> I vote for ...</h1>
+    
+    <div ng-repeat="choices in poll.options track by $index">
+        <div class="btn-group" data-toggle="button">
+            <label class="btn btn-primary">
+                <input type="radio" name="option" id="option1" autocomplete="off"> {{choices.choice}}
+            </label>
+        </div>    
+    </div>
+    <!-- add controller to handle submit -->
+    <input class="btn btn-primary" type="submit">
 </section>
