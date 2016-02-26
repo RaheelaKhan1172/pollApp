@@ -69,12 +69,14 @@ exports.list = function(req,res,next) {
   Poll.find({})
   .populate('options','choice count')
   .exec(function(err,polls) {
+      console.log('so many polls = > ', polls);
     if (err) {
       return res.status(400).send({
         message: getErrorMessage(err)
       });
     } else {
             //polls is an array
+        console.log('da polls befor ebeign sent => ', polls);
         res.json(polls);
     }   
   });
@@ -91,6 +93,7 @@ exports.update = function(req,res,next) {
     var i = 0;
     savePoll = function(id) {
         i+=1; 
+        //change this later to push until end of length
         if (i === 1) {
             poll.options.push(id);
         } else if (i === 2) {
@@ -230,7 +233,6 @@ exports.hasAuthorization = function(req,res,next) {
 exports.pollByID = function(req,res,next,id) {
     var i = 0;
     
-    console.log('inside fucking poll', req.body,id);
 Poll.findOne({
   _id:id
 }).populate('options','choice count').exec(function(err,poll) {

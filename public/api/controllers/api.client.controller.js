@@ -6,6 +6,7 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
           title: '',
           options: [{text:''},{text:''},{text:''}]
         };
+        
         //also used for updating
         $scope.addMoreOptions = function() {
           $scope.poll.options.push({text:''});  
@@ -24,7 +25,9 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
         };
         
         $scope.find = function() {
+            console.log('the scope polls ', $scope.polls);
           $scope.polls = Poll.query();
+            console.log('after the results = >', $scope.polls);
         };
         
         $scope.findOne = function() {

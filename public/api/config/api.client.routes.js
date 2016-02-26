@@ -1,5 +1,8 @@
 angular.module('api').config(['$routeProvider',function($routeProvider) {
-    $routeProvider.when('/polls/create', {
+    $routeProvider.when('/polls', {
+        templateUrl:'api/views/list-api.client.view.html',
+        controller: 'ApiController'
+    }).when('/polls/create', {
         templateUrl:'api/views/create-api.client.view.html',
         controller:'ApiController'
     }).when('/polls/:id',{

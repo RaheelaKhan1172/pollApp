@@ -1,0 +1,12 @@
+<section data-ng-controller="ApiController" data-ng-init="find()">
+    <h1>Polls</h1>
+    <ul>
+        <li data-ng-repeat="poll in polls">
+            <a data-ng-href="#!/polls/{{poll._id}}" data-ng-bind="poll.title"></a><br>
+            <p data-ng-bind="poll.options.choice"></p>
+        </li>
+    </ul>
+    <div data-ng-hide="!polls || polls.length">
+        No Polls yet make <a href="/#!/polls/create">one</a>
+    </div>
+</section>
