@@ -87,6 +87,42 @@ exports.read = function(req,res) {
 };
 
 exports.update = function(req,res,next) {
+    
+    console.log('inside the update function ', req.body,req.body.voteId);
+    var poll = req.poll;
+    console.log('poll =>', poll );
+    if (req.body.voteId) {
+      Option.findOneAndUpdate({'_id':req.body.voteId},{$inc: {'count':1}},{new:true},function(err,option){
+         if (err) {
+             return res.status(400).send({
+                 message: getErrorMessage(err)
+             });
+         } else {
+             console.log('uptopm',option);
+             var found = false;
+             var i = 0;
+             while (!found && i < poll.options.length) {
+                 console.log('is this happening?' ,poll.options[i]._id,'the comparison =>', req.body.voteId);
+                 if (poll.options[i]._id == req.body.voteId) {
+                     console.log('does this every happen?');
+                     poll.options[i].count = option.count;
+                     found = true;
+                 }
+                 i++;
+             }
+          poll.save(function(err) {
+              if (err) {
+                  return res.status(400).send({
+                      message:getErrorMessage(err)
+                  })
+              } else {
+                  console.log('new poll -> ',poll);
+                  res.json(poll);
+              }
+          });
+         }
+      });
+    } else {
     Poll.findById(req.body._id).populate('options', 'choice count').exec(function(err,poll) {
     var choices = req.body.options.map(v=> v.text);
     var i = 0;
@@ -130,7 +166,8 @@ exports.update = function(req,res,next) {
     });
         
 });
-};
+}
+}; 
      /*   var savePoll = function(id) {
             (console.log('hello againnnn',id));
             poll.options.push(id);

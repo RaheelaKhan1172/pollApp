@@ -2,14 +2,20 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
     function($scope,$routeParams,Authentication,$location,Poll) {
         $scope.authentication = Authentication;
         
+        
+
+        
         $scope.poll = {
           title: '',
-          options: [{text:''},{text:''},{text:''}]
+          options: [{text:'',count:0},{text:'',count:0},{text:'',count:0}],
+            votes: []
         };
+        
+        $scope.userChoice = $scope.poll.options;
         
         //also used for updating
         $scope.addMoreOptions = function() {
-          $scope.poll.options.push({text:''});  
+          $scope.poll.options.push({text:'',count:0});  
         };
         
         $scope.createPoll = function() {
@@ -39,12 +45,24 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
         };
         
         $scope.update = function() {
-            console.log($scope.poll,'the poll')
+            console.log($scope.poll,'the poll');
             $scope.poll.$update(function() {
               $location.path('polls/' + $scope.poll._id);  
             }, function(errorResponse) {
                 $scope.error = errorResponse.data.message;
             });
+        };
+        
+        $scope.updateVote = function() {
+            $scope.poll.voteId = $scope.userChoice;
+            $scope.poll.$update(function(data) {
+                console.log('am i the data?',data,'the scope poll => ',$scope.poll);
+                $location.path('polls/' + data._id);
+            }, function(errorResponse,data) {
+                $scope.error = errorResponse.data.message;
+                delete $scope.poll.voteId
+            });
+            console.log($scope.poll);
         };
         
         $scope.delete = function(poll) {
