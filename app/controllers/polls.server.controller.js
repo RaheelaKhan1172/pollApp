@@ -92,6 +92,7 @@ exports.update = function(req,res,next) {
     var poll = req.poll;
     console.log('poll =>', poll );
     if (req.body.voteId) {
+        //returns the updated document with option new:true
       Option.findOneAndUpdate({'_id':req.body.voteId},{$inc: {'count':1}},{new:true},function(err,option){
          if (err) {
              return res.status(400).send({
@@ -100,12 +101,12 @@ exports.update = function(req,res,next) {
          } else {
              console.log('uptopm',option);
              var found = false;
-             var i = 0;
-             while (!found && i < poll.options.length) {
-                 console.log('is this happening?' ,poll.options[i]._id,'the comparison =>', req.body.voteId);
-                 if (poll.options[i]._id == req.body.voteId) {
+             var n = 0;
+             while ( !found && (n < poll.options.length)) {
+                 console.log('is this happening?' ,poll.options[n]._id,'the comparison =>', req.body.voteId);
+                 if (poll.options[n]._id == req.body.voteId) {
                      console.log('does this every happen?');
-                     poll.options[i].count = option.count;
+                     poll.options[n].count = option.count;
                      found = true;
                  }
                  i++;

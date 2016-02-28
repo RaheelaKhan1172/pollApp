@@ -10,9 +10,11 @@
     
                 <div ng-repeat="choices in poll.options track by $index">
                 <label>
-                    <input type="radio" data-ng-value="choices._id" data-ng-model="$parent.userChoice"> {{choices.choice}}
+                    <input type="radio" data-ng-value="choices._id" data-ng-model="$parent.userChoice"> {{choices.choice}} {{choices.count}}
                 </label>
         </div>    
+        <canvas tc-chartjs-pie chart-data="data" chart-options="chartOptions" width="350" height="350"></canvas>
+
     <!-- add controller to handle submit/ add href to allow guest voting?  -->
     <input class="btn btn-primary" type="submit" ng-click="updateVote()">
 </section>

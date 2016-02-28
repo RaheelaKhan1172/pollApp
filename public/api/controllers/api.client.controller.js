@@ -13,6 +13,10 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
         
         $scope.userChoice = $scope.poll.options;
         
+        var colors =['#330099','#660099','#990099','#FF6633','#FFFF33','#66FF33','#0066FF','#9966CC','#FF6699'];
+        
+        var highlight = ["#336699","#666699","#996699", "#FF9966", "#FFFF99","#66FF99","#00CCFF","#9999CC","#FF9999"];
+
         //also used for updating
         $scope.addMoreOptions = function() {
           $scope.poll.options.push({text:'',count:0});  
@@ -37,11 +41,22 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
         };
         
         $scope.findOne = function() {
-            
           $scope.poll = Poll.get({
               id: $routeParams.id
+          },function(data) {
+              console.log('ay just a test',data, data.options);
+              $scope.data = data.options.map(function(item,index) {
+                  return {
+                      "value":item.count,
+                      "label":item.choice,
+                      "color":colors[index % colors.length],
+                      "highlight":highlight[index%highlight.length]
+                  }
+                  console.log($scope.data, '<= data!');
+              });
+              
           });
-            console.log($scope.poll,$scope.authentication,'id',$scope.poll.creator, 'user id','in findOne');
+            console.log($scope.poll,$scope.authentication,'id',$scope.poll.creator, 'user id','in findOne','options => ');
         };
         
         $scope.update = function() {
@@ -57,7 +72,7 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
             $scope.poll.voteId = $scope.userChoice;
             $scope.poll.$update(function(data) {
                 console.log('am i the data?',data,'the scope poll => ',$scope.poll);
-                $location.path('polls/' + data._id);
+                $scope.apply(); 
             }, function(errorResponse,data) {
                 $scope.error = errorResponse.data.message;
                 delete $scope.poll.voteId
