@@ -109,7 +109,7 @@ exports.update = function(req,res,next) {
                      poll.options[n].count = option.count;
                      found = true;
                  }
-                 i++;
+                 n++;
              }
           poll.save(function(err) {
               if (err) {

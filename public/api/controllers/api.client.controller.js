@@ -1,10 +1,7 @@
 angular.module('api').controller('ApiController',  ['$scope','$routeParams','Authentication','$location','Poll',
     function($scope,$routeParams,Authentication,$location,Poll) {
         $scope.authentication = Authentication;
-        
-        
 
-        
         $scope.poll = {
           title: '',
           options: [{text:'',count:0},{text:'',count:0},{text:'',count:0}],
@@ -20,6 +17,17 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
         //also used for updating
         $scope.addMoreOptions = function() {
           $scope.poll.options.push({text:'',count:0});  
+        };
+        var updateGraph = function(data) {
+          $scope.data = data.options.map(function(item,index) {
+                  return {
+                      "value":item.count,
+                      "label":item.choice,
+                      "color":colors[index % colors.length],
+                      "highlight":highlight[index%highlight.length]
+                  }
+                  console.log($scope.data, '<= data!');
+              });
         };
         
         $scope.createPoll = function() {
@@ -45,17 +53,9 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
               id: $routeParams.id
           },function(data) {
               console.log('ay just a test',data, data.options);
-              $scope.data = data.options.map(function(item,index) {
-                  return {
-                      "value":item.count,
-                      "label":item.choice,
-                      "color":colors[index % colors.length],
-                      "highlight":highlight[index%highlight.length]
-                  }
-                  console.log($scope.data, '<= data!');
-              });
-              
+              updateGraph(data);
           });
+            
             console.log($scope.poll,$scope.authentication,'id',$scope.poll.creator, 'user id','in findOne','options => ');
         };
         
@@ -72,7 +72,7 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
             $scope.poll.voteId = $scope.userChoice;
             $scope.poll.$update(function(data) {
                 console.log('am i the data?',data,'the scope poll => ',$scope.poll);
-                $scope.apply(); 
+                updateGraph(data);
             }, function(errorResponse,data) {
                 $scope.error = errorResponse.data.message;
                 delete $scope.poll.voteId
@@ -80,6 +80,7 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
             console.log($scope.poll);
         };
         
+        //fix update for poll for this one
         $scope.delete = function(poll) {
             if(poll) {
                 poll.$remove(function() {
