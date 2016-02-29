@@ -33,7 +33,7 @@ var UserSchema = new Schema({
     },
     providerId: String,
     providerData: {},
-    polls : [{ type: Schema.Types.ObjectId, ref: 'Poll' }]
+    polls: [{ type: Schema.Types.ObjectId, ref: 'Poll' }]
     
 });
 

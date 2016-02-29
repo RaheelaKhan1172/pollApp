@@ -6,6 +6,8 @@
     <a href="#" data-ng-click="delete();">Delete</a>
   </div>
   <em> Poll </em>
+<div class="row">
+    <div class="col-md-4">
     <h1> I vote for ...</h1>
     
                 <div ng-repeat="choices in poll.options track by $index">
@@ -18,9 +20,9 @@
         <div data-ng-show="error">
             <strong data-ng-bind="error"></strong>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-             <canvas tc-chartjs-pie chart-data="data" chart-options="chartOptions" width="350" height="350" style="height:350;width:350;"></canvas>
+    </div>
+            <div class="col-md-8">
+                 <canvas tc-chartjs chart-type="pie" chart-data="data" chart-options="chartOptions" height="300" width="300"></canvas>
             </div>
         </div>
        

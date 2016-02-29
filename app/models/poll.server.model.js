@@ -13,7 +13,8 @@ var PollSchema = new Schema({
   creator: {
     type: Schema.ObjectId,
     ref: 'User'
-  }
+  },
+  votedBy:[{type: Schema.ObjectId, ref:'User'}]
 });
 
 mongoose.model('Poll', PollSchema);

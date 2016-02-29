@@ -14,9 +14,8 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
         
         var highlight = ["#336699","#666699","#996699", "#FF9966", "#FFFF99","#66FF99","#00CCFF","#9999CC","#FF9999"];
         
+        
      $scope.chartOptions =  {
-
-      responsive: true,
 
       segmentShowStroke : true,
 
@@ -35,12 +34,9 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
       maintainAspectRatio: false,
          
       animateScale : false,
+      legendTemplate:''
     };
         
-        //also used for updating
-        $scope.addMoreOptions = function() {
-          $scope.poll.options.push({text:'',count:0});  
-        };
         var updateGraph = function(data) {
           $scope.data = data.options.map(function(item,index) {
                   return {
@@ -51,6 +47,11 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
                   }
                   console.log($scope.data, '<= data!');
               });
+            dataSet = $scope.data;
+        };
+        
+        $scope.addMoreOptions = function() {
+            $scope.poll.options.push({text:'',count:0});
         };
         
         $scope.createPoll = function() {
@@ -92,14 +93,14 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
         
         $scope.updateVote = function() {
             
-            if (!$scope.authentication.user) {
-                $scope.error = 'You must be logged in to vote!'
-            };
             $scope.poll.voteId = $scope.userChoice;
+            if ($scope.poll.votedBy == $scope.authentication._id) {
+                
+            }
             $scope.poll.$update(function(data) {
                 console.log('am i the data?',data,'the scope poll => ',$scope.poll);
                 updateGraph(data);
-            }, function(errorResponse,data) {
+            }, function(errorResponse) {
                 $scope.error = errorResponse.data.message;
                 delete $scope.poll.voteId
             });

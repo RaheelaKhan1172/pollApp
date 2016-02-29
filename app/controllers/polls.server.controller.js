@@ -92,6 +92,15 @@ exports.update = function(req,res,next) {
     var poll = req.poll;
     console.log('poll =>', poll );
     if (req.body.voteId) {
+        for (var i = 0; i < poll.votedBy.length; i++) {
+            console.log('hellloooo?',req.user._id, 'id =>', poll.votedBy[i])
+            if (String(req.user._id) == String(poll.votedBy[i])) {
+                console.log('jello do I happen')
+                return res.status(400).send({
+                    message: 'You already voted'
+                });
+            }
+        }
         //returns the updated document with option new:true
       Option.findOneAndUpdate({'_id':req.body.voteId},{$inc: {'count':1}},{new:true},function(err,option){
          if (err) {
@@ -101,6 +110,7 @@ exports.update = function(req,res,next) {
          } else {
              console.log('uptopm',option);
              var found = false;
+             poll.votedBy.push(req.user._id);
              var n = 0;
              while ( !found && (n < poll.options.length)) {
                  console.log('is this happening?' ,poll.options[n]._id,'the comparison =>', req.body.voteId);
@@ -118,6 +128,7 @@ exports.update = function(req,res,next) {
                   })
               } else {
                   console.log('new poll -> ',poll);
+            
                   res.json(poll);
               }
           });
