@@ -75,7 +75,6 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
           $scope.poll = Poll.get({
               id: $routeParams.id
           },function(data) {
-              console.log('ay just a test',data, data.options);
               updateGraph(data);
           });
             
@@ -92,6 +91,10 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
         };
         
         $scope.updateVote = function() {
+            
+            if (!$scope.authentication.user) {
+                $scope.error = 'You must be logged in to vote!'
+            };
             $scope.poll.voteId = $scope.userChoice;
             $scope.poll.$update(function(data) {
                 console.log('am i the data?',data,'the scope poll => ',$scope.poll);
