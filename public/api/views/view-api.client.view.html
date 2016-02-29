@@ -14,7 +14,12 @@
                 </label>
         </div>    
        <input class="btn btn-primary" type="submit" ng-click="updateVote()">
-        <canvas tc-chartjs-pie chart-data="data" chart-options="chartOptions" width="350" height="350"></canvas>
+        <div class="row">
+            <div class="col-lg-12">
+             <canvas tc-chartjs-pie chart-data="data" chart-options="chartOptions" width="350" height="350" style="height:350;width:350;"></canvas>
+            </div>
+        </div>
+       
 
     <!-- add controller to handle submit/ add href to allow guest voting?  -->
 </section>

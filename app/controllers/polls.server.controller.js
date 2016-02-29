@@ -259,7 +259,7 @@ exports.delete = function(req,res,next) {
 };
 
 exports.hasAuthorization = function(req,res,next) {
-  if (req.poll.creator.id !== req.user.id) {
+  if (req.poll.creator._id !== req.user._id) {
     return res.status(403).send({
       message: 'User is not authorized'
     });

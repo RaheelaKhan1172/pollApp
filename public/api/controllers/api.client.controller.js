@@ -13,7 +13,30 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
         var colors =['#330099','#660099','#990099','#FF6633','#FFFF33','#66FF33','#0066FF','#9966CC','#FF6699'];
         
         var highlight = ["#336699","#666699","#996699", "#FF9966", "#FFFF99","#66FF99","#00CCFF","#9999CC","#FF9999"];
+        
+     $scope.chartOptions =  {
 
+      responsive: true,
+
+      segmentShowStroke : true,
+
+      segmentStrokeColor : '#fff',
+
+      segmentStrokeWidth : 1,
+
+      percentageInnerCutout : 0, 
+
+      animationSteps : 100,
+
+      animationEasing : 'easeOutBounce',
+
+      animateRotate : true,
+         
+      maintainAspectRatio: false,
+         
+      animateScale : false,
+    };
+        
         //also used for updating
         $scope.addMoreOptions = function() {
           $scope.poll.options.push({text:'',count:0});  
