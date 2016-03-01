@@ -109,7 +109,7 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
         $scope.updateVote = function() {
             
             $scope.poll.voteId = $scope.userChoice;
-       
+            $scope.hasVotes = true;
             $scope.poll.$update(function(data) {
                 console.log('am i the data?',data,'the scope poll => ',$scope.poll);
                 updateGraph(data);

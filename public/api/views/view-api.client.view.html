@@ -1,13 +1,19 @@
 <section data-ng-controller="ApiController" data-ng-init="findOne()">
-  <h1 data-ng-bind="poll.title"></h1>
-  <div data-ng-show="authentication.user._id == poll.creator">
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 data-ng-bind="poll.title"></h1>
+            <div data-ng-show="authentication.user._id == poll.creator">
      
-    <a href="/#!/polls/{{poll._id}}/edit">Edit</a>
-    <a href="#" data-ng-click="delete();">Delete</a>
-  </div>
-  <em> Poll </em>
+            <a href="/#!/polls/{{poll._id}}/edit">Edit</a>
+            <a href="#" data-ng-click="delete();">Delete</a>
+        </div>
+        </div>
+    </div>
 <div class="row">
     <div class="col-md-4">
+        
     <h1> I vote for ...</h1>
     
                 <div ng-repeat="choices in poll.options track by $index">
@@ -15,17 +21,18 @@
                     <input type="radio" data-ng-value="choices._id" data-ng-model="$parent.userChoice"> {{choices.choice}} {{choices.count}}
                 </label>
         </div>    
-       <div ng-hide="authentication.user"> <h1> Login in to vote!!</h1></div>
-    <div ng-show="authentication.user"><input class="btn btn-primary" type="submit" ng-click="updateVote()"></div>
+    <input class="btn btn-primary" type="submit" ng-disabled="!authentication.user"ng-click="updateVote()"><p ng-hide="authentication.user">Log in to vote!</p></div>
         <div data-ng-show="error">
             <strong data-ng-bind="error"></strong>
         </div>
-    </div>
+    <div ng-hide="hasVotes">
             <div class="col-md-8">
+                <h1> No votes yet!<br> Be the first to vote!</h1>
                  <canvas tc-chartjs chart-type="pie" chart-data="data" chart-options="chartOptions" height="300" width="300"></canvas>
             </div>
-        </div>
-       
+    </div>
+    </div>
+    </div>
 
     <!-- add controller to handle submit/ add href to allow guest voting?  -->
 </section>
