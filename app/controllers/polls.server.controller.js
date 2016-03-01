@@ -93,7 +93,6 @@ exports.update = function(req,res,next) {
     console.log('poll =>', poll );
     if (req.body.voteId) {
         for (var i = 0; i < poll.votedBy.length; i++) {
-            console.log('hellloooo?',req.user._id, 'id =>', poll.votedBy[i])
             if (String(req.user._id) == String(poll.votedBy[i])) {
                 console.log('jello do I happen')
                 return res.status(400).send({

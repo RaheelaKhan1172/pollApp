@@ -1,7 +1,7 @@
 angular.module('api').controller('ApiController',  ['$scope','$routeParams','Authentication','$location','Poll',
     function($scope,$routeParams,Authentication,$location,Poll) {
         $scope.authentication = Authentication;
-
+        $scope.data = [];
         $scope.poll = {
           title: '',
           options: [{text:'',count:0},{text:'',count:0},{text:'',count:0}],
@@ -38,6 +38,7 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
     };
         
         var updateGraph = function(data) {
+            console.log($scope.data);
           $scope.data = data.options.map(function(item,index) {
                   return {
                       "value":item.count,
@@ -47,7 +48,6 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
                   }
                   console.log($scope.data, '<= data!');
               });
-            dataSet = $scope.data;
         };
         
         $scope.addMoreOptions = function() {
@@ -67,12 +67,27 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
         };
         
         $scope.find = function() {
-            console.log('the scope polls ', $scope.polls);
-          $scope.polls = Poll.query();
+          $scope.polls = Poll.query(function(data) {
+              console.log('yo ho',data.length);
+            for (var i = 0; i < data.length; i++) {
+                console.log('hm lets see ',data[i].options, data[i].options[i]);
+              $scope.data.push(data[i].options.map(function(a) {
+                  console.log( 'value of a insinde map ', a)
+                  return {
+                      'value': a.count,
+                      'label':a.choice,
+                      'color':colors[i]
+                  }
+              }));
+             
+            }
+              console.log('full results =>' ,$scope.data);
+          });
             console.log('after the results = >', $scope.polls);
         };
         
         $scope.findOne = function() {
+            console.log('data ', $scope.data)
           $scope.poll = Poll.get({
               id: $routeParams.id
           },function(data) {
@@ -94,9 +109,7 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
         $scope.updateVote = function() {
             
             $scope.poll.voteId = $scope.userChoice;
-            if ($scope.poll.votedBy == $scope.authentication._id) {
-                
-            }
+       
             $scope.poll.$update(function(data) {
                 console.log('am i the data?',data,'the scope poll => ',$scope.poll);
                 updateGraph(data);

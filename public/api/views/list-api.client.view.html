@@ -1,11 +1,15 @@
 <section data-ng-controller="ApiController" data-ng-init="find()">
     <h1>Polls</h1>
-    <ul>
-        <li data-ng-repeat="poll in polls">
-            <a data-ng-href="#!/polls/{{poll._id}}" data-ng-bind="poll.title"></a><br>
-            <p data-ng-bind="poll.options.choice"></p>
-        </li>
-    </ul>
+    <div class="row">
+                <div data-ng-repeat="poll in polls" class="col-md-2 text-center">
+                  <a data-ng-href="#!/polls/{{poll._id}}" data-ng-bind="poll.title"></a>
+                </div>
+    </div>
+    <div class="row">
+                <div data-ng-repeat="one in data" class="col-md-2 text-center">
+                     <canvas tc-chartjs chart-type="pie" chart-data="one" chart-options="chartOptions" height="150" width="150"></canvas>
+        </div>
+    </div>
     <div data-ng-hide="!polls || polls.length">
         No Polls yet make <a href="/#!/polls/create">one</a>
     </div>

@@ -25,7 +25,7 @@ var passport = passport();
 
 
 
-app.listen(3030);
+app.listen(3030, '0.0.0.0');
 
 module.exports = app;
 

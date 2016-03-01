@@ -1,4 +1,8 @@
 angular.module('api').config(['$routeProvider',function($routeProvider) {
+    $routeProvider.when('/', {
+       templateUrl:'api/views/list-api.client.view.html',
+        controller:'ApiController'
+    });
     $routeProvider.when('/polls', {
         templateUrl:'api/views/list-api.client.view.html',
         controller: 'ApiController'
@@ -11,5 +15,5 @@ angular.module('api').config(['$routeProvider',function($routeProvider) {
     }).when('/polls/:id/edit', {
         templateUrl:'api/views/edit-api.client.view.html',
         controller:'ApiController'
-    }).otherwise({redirectTo:'/'});
+    }).otherwise({redirectTo:'/polls'});
 }]);
