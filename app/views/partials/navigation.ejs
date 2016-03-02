@@ -1,17 +1,17 @@
- <nav class="navbar navbar-default" role="navigation">
+ <nav class="navbar navbar-default navbar-inverse" role="navigation">
       <div class="navbar-header">
-        <button class="navbar-toggle" type="button" ng-init="navCollapsed" ng-click="navCollapsed = !navCollapsed">
+        <button class="navbar-toggle" type="button" ng-init="navCollapsed" ng-click="navCollapsed = !navCollapsed"> <!-- if the navbar is shrunken, it will display it as closed first, then open it on click -->
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-      <a class="navbar-brand" href="/">Polling App</a>
+      <a class="navbar-brand" href="/#!/" style="color:gray;">Polling App</a>
       </div> <!-- end nav header -->
       <div class="collapse navbar-collapse" ng-class="navCollapsed && 'in'">
         <ul class="nav navbar-nav navbar-right">
           <% if (user) { %>
-           <li><a href="/user/">Hello, <%= name %> </a></li>
+           <li><a href="/#!/user/">Hello, <%= name %> </a></li>
            <li><a href="/signout">Sign out</a> </li>
           <% } else { %>
            <li><a href="/signin"> Sign in</a> </li>

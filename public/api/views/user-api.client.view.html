@@ -51,19 +51,21 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-3 col-md-6">
-        <span data-ng-repeat="one in data">
+    <div class="col-lg-3 col-md-6" data-ng-repeat="one in data">
    <!--  <div class="panel panel-primary">
       <div class="panel-heading"> 
          <div data-ng-repeat="one in data"> -->
             <canvas tc-chartjs chart-type="pie" chart-data="one" chart-options="chartOptions" height="100" width="100"></canvas>
-        </span>
-            <!-- display pie charts here -->
-    <div class="panel-footer" data-ng-repeat="poll in userPoll">
-      <li>  <a href="#!/polls/{{poll._id}}/edit"> Edit </a></li>
-      <li> <a href="#" data-ng-click="delete();"> Delete</a></li>
       </div>
-    </div>
+    </div>      <!-- display pie charts here -->
+      <div class="row">
+      <div class="col-lg-3 col-md-6" data-ng-repeat="poll in userPoll">
+    <div class="panel-footer">
+      <li><a data-ng-bind="poll.title"  href="#!/polls/{{poll._id}}"></a></li>
+      <li><a href="#!/polls/{{poll._id}}/edit"> Edit </a></li>
+      <li><a href="#" data-ng-click="delete();"> Delete</a></li>
+      </div>
+      </div>
     </div>
  <!-- </div> -->
   

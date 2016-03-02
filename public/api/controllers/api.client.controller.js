@@ -147,19 +147,26 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
             console.log('before request is sent=>', $scope.authentication,$scope.authentication.user._id)
             $scope.poll = Poll.query(function(data) {
                 $scope.userPoll = $scope.poll.filter(function(a,i) {
-                    console.log('hello am I happening?',a)
                     return a.creator == $scope.authentication.user._id;
                 });
             for (var i = 0; i < $scope.userPoll.length; i++ ) {
-                if ($scope.userPoll[i].options[i].count) {
-                    $scope.totalVotes += 1;
+                for (var m = 0;  m < $scope.userPoll[i].options.length; m++) {
+                    if ($scope.userPoll[i].options[m].count) {
+                        console.log('hello i shoud lahapen',$scope.userPoll[i].options[i].choice)
+                        $scope.totalVotes += 1;
+                    }
                 }
             }
                 updateGraph($scope.userPoll);
             });
             
         };
-      
+        $scope.timeOut = function() {
+            $scope.hideIt = true;
+            $timeout(function() {
+                $scope.hidden = true;
+            },3000);
+        };
         //fix update for poll for this one
         $scope.delete = function(poll) {
             if(poll) {
