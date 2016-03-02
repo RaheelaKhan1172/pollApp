@@ -11,7 +11,7 @@
         </div>
         </div>
     </div>
-<div class="row">
+    <div class="row">
     <div class="col-md-4">
         
     <h1> I vote for ...</h1>
@@ -25,11 +25,15 @@
         <div data-ng-show="error">
             <strong data-ng-bind="error"></strong>
         </div>
-    <div ng-hide="hasVotes">
+        
+        
             <div class="col-md-8">
-                <h1> No votes yet!<br> Be the first to vote!</h1>
+                <div ng-hide="hasVotes">
+                    <p> No votes yet! <br> Be the first to vote!</p>
+                </div>
+                <div ng-show="hasVotes">
                  <canvas tc-chartjs chart-type="pie" chart-data="data" chart-options="chartOptions" height="300" width="300"></canvas>
-            </div>
+                </div>
     </div>
     </div>
     </div>

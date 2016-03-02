@@ -38,7 +38,8 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
     };
         
         var updateGraph = function(data) {
-            console.log($scope.data);
+            console.log('the data => ', data)
+          if (data.options) {
           $scope.data = data.options.map(function(item,index) {
                   return {
                       "value":item.count,
@@ -46,8 +47,20 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
                       "color":colors[index % colors.length],
                       "highlight":highlight[index%highlight.length]
                   }
-                  console.log($scope.data, '<= data!');
               });
+          } else {
+              for (var i = 0; i < data.length; i++) {
+                  $scope.data.push(data[i].options.map(function(item,index) {
+                    return {
+                      "value":item.count,
+                      "label":item.choice,
+                      "color":colors[i % colors.length],
+                      "highlight":highlight[i % highlight.length]
+                  }
+                  }));
+              };
+              console.log($scope.data);
+          }
         };
         
         $scope.addMoreOptions = function() {
@@ -68,7 +81,7 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
         
         $scope.find = function() {
           $scope.polls = Poll.query(function(data) {
-              console.log('yo ho',data.length);
+            //  console.log('yo ho',data.length);
             for (var i = 0; i < data.length; i++) {
                 console.log('hm lets see ',data[i].options, data[i].options[i]);
               $scope.data.push(data[i].options.map(function(a) {
@@ -81,17 +94,27 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
               }));
              
             }
-              console.log('full results =>' ,$scope.data);
+         //     console.log('full results =>' ,$scope.data);
           });
-            console.log('after the results = >', $scope.polls);
+          //  console.log('after the results = >', $scope.polls);
         };
         
         $scope.findOne = function() {
-            console.log('data ', $scope.data)
           $scope.poll = Poll.get({
-              id: $routeParams.id
+            id: $routeParams.id
           },function(data) {
-              updateGraph(data);
+              var counts = 0;
+              for (var i = 0; i<data.options.length;i++) {
+                  if (data.options[i].count) {
+                      counts+=1;
+                  } 
+                  if (counts) {
+                      $scope.hasVotes = true;
+                      updateGraph(data)
+                  } else {
+                     $scope.hasVotes = false;
+                  }
+              }
           });
             
             console.log($scope.poll,$scope.authentication,'id',$scope.poll.creator, 'user id','in findOne','options => ');
@@ -107,9 +130,8 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
         };
         
         $scope.updateVote = function() {
-            
-            $scope.poll.voteId = $scope.userChoice;
             $scope.hasVotes = true;
+            $scope.poll.voteId = $scope.userChoice;
             $scope.poll.$update(function(data) {
                 console.log('am i the data?',data,'the scope poll => ',$scope.poll);
                 updateGraph(data);
@@ -120,6 +142,24 @@ angular.module('api').controller('ApiController',  ['$scope','$routeParams','Aut
             console.log($scope.poll);
         };
         
+        $scope.findUserPolls = function() {
+            $scope.totalVotes = 0;
+            console.log('before request is sent=>', $scope.authentication,$scope.authentication.user._id)
+            $scope.poll = Poll.query(function(data) {
+                $scope.userPoll = $scope.poll.filter(function(a,i) {
+                    console.log('hello am I happening?',a)
+                    return a.creator == $scope.authentication.user._id;
+                });
+            for (var i = 0; i < $scope.userPoll.length; i++ ) {
+                if ($scope.userPoll[i].options[i].count) {
+                    $scope.totalVotes += 1;
+                }
+            }
+                updateGraph($scope.userPoll);
+            });
+            
+        };
+      
         //fix update for poll for this one
         $scope.delete = function(poll) {
             if(poll) {

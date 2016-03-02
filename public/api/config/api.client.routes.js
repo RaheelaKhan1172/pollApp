@@ -3,6 +3,12 @@ angular.module('api').config(['$routeProvider',function($routeProvider) {
        templateUrl:'api/views/list-api.client.view.html',
         controller:'ApiController'
     });
+    
+    $routeProvider.when('/user', {
+        templateUrl: 'api/views/user-api.client.view.html',
+        controller: 'ApiController'
+    });
+    
     $routeProvider.when('/polls', {
         templateUrl:'api/views/list-api.client.view.html',
         controller: 'ApiController'

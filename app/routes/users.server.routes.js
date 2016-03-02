@@ -10,7 +10,7 @@ module.exports = function(app) {
   app.route('/signin')
   .get(users.renderSignin)
   .post(passport.authenticate('local', {
-    successRedirect: '/user',
+    successRedirect: '/#!/user',
     failureRedirect: '/signin',
     failureFlash: true
   }));
@@ -20,7 +20,7 @@ module.exports = function(app) {
   }));
   app.get('/oauth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/signin',
-    successRedirect: '/user'
+    successRedirect: '/#!/user'
   }));
 
   app.get('/signout', users.signout);
