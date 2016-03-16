@@ -1,4 +1,4 @@
-var  url = process.env.db,
+var  url = process.env.PROD_DB,
   mongoose = require('mongoose');
 
 module.exports = function() {

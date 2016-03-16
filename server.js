@@ -8,21 +8,6 @@ var app = express();
 var passport = passport();
 
 
-/*var postData = querystring.stringify({
-  "title": "What is your favorite candy?",  
-  "options": [
-    {
-      "option": "Recess"
-    },
-    {
-      "option": "Snickers"
-    },
-    {
-      "option":"Starburst"
-    }
-  ]
-});*/
-
 
 
 app.listen(process.env.PORT || 3030);
