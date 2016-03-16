@@ -1,4 +1,4 @@
-var  url = 'mongodb://localhost:27017/users',
+var  url = process.env.db,
   mongoose = require('mongoose');
 
 module.exports = function() {
